@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
+from balance_api import get_balance_api
 
 app = FastAPI()
 
@@ -23,3 +24,7 @@ async def create_item(item: Item):
 async def post_dendrite(synapse: dict):
     print('dendrite synapse', synapse)
     return { "synapse": synapse}
+
+@app.post("/get_balance")
+async def call_get_balance_api(request: dict):
+    return await get_balance_api(request)
