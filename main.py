@@ -5,6 +5,11 @@ from query import QueryRequest, get_balance, query_inerface
 from query_map import QueryMapRequest, get_balances, query_map_interface
 from set_weights import SetWeightsRequest, set_weights
 from rpc_request import RpcRequestRequest, rpc_request_interface, state_call
+from get_metadata_call_function import (
+    GetMetadataCallRequest,
+    get_metadata_call_function
+)
+from get_block_number import get_block_number
 app = FastAPI()
 
 
@@ -72,3 +77,13 @@ async def call_rpc_request_api(request: RpcRequestRequest):
 @app.post("/state_call")
 async def call_state_call_api(request: RpcRequestRequest):
     return await state_call(request)
+
+
+@app.post("/get_metadata")
+async def call_get_metadata_api(request: GetMetadataCallRequest):
+    return await get_metadata_call_function(request)
+
+
+@app.post("/get_block_number")
+async def call_get_block_number_api():
+    return await get_block_number()
