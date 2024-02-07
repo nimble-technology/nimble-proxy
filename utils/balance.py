@@ -17,8 +17,6 @@
 
 from typing import Union
 
-# import nimble
-
 
 class Balance:
     """
@@ -223,12 +221,6 @@ class Balance:
                 return Balance.from_vim(int(other // self.vim))
             except (ValueError, TypeError):
                 raise NotImplementedError("Unsupported type")
-
-    def __int__(self) -> int:
-        return self.vim
-
-    def __float__(self) -> float:
-        return self.nim
 
     def __nonzero__(self) -> bool:
         return bool(self.vim)

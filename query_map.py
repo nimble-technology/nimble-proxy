@@ -1,7 +1,8 @@
 from pydantic import BaseModel
-from substrateinterface import SubstrateInterface
+from substrateinterface.base import QueryMapResult, SubstrateInterface
 from retry import retry
-from typing import List, Optional
+from typing import List, Union, Optional
+from utils.balance import Balance
 
 substrate_instance = SubstrateInterface(
     url="wss://testnet.nimble.technology"
@@ -20,7 +21,7 @@ def make_substrate_call_with_retry(
         block_hash = substrate.get_block_hash(block)
     else:
         block_hash = None
-    return substrate.query(
+    return substrate.query_map(
         module=module,
         storage_function=storage_function,
         params=params,
@@ -28,7 +29,7 @@ def make_substrate_call_with_retry(
     )
 
 
-class QueryRequest(BaseModel):
+class QueryMapRequest(BaseModel):
     substrate_instance: str
     module: str
     storage_function: str
@@ -36,7 +37,7 @@ class QueryRequest(BaseModel):
     block: Optional[int] = None
 
 
-async def get_balance(request: QueryRequest) -> dict:
+async def get_balances(request: QueryMapRequest) -> dict:
     result = make_substrate_call_with_retry(
         substrate_instance,
         request.module,
@@ -44,14 +45,16 @@ async def get_balance(request: QueryRequest) -> dict:
         request.params,
         request.block
     )
-    if result:
-        balance = result.value["data"]["free"]
-        return {"balance": balance}
+    return_dict = {}
+    for r in result:
+        bal = Balance(int(r[1]["data"]["free"].value))
+        return_dict[r[0].value] = bal
+    return return_dict
 
-    return {"balance": "-1"}
 
-
-async def query_inerface(request: QueryRequest) -> Optional[object]:
+async def query_map_interface(
+        request: QueryMapRequest
+) -> Union[Optional[object], QueryMapResult]:
     return make_substrate_call_with_retry(
         substrate_instance,
         request.module,
