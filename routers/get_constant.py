@@ -1,7 +1,7 @@
+from typing import Optional
 from pydantic import BaseModel
 from substrateinterface import SubstrateInterface
 from retry import retry
-from typing import Optional
 
 substrate_instance = SubstrateInterface(
     url="wss://testnet.nimble.technology"
@@ -33,7 +33,9 @@ class GetConstantRequest(BaseModel):
     block: Optional[int] = None
 
 
-async def query_map_interface(request: GetConstantRequest) -> Optional[object]:
+async def get_constant_interface(
+    request: GetConstantRequest
+) -> Optional[object]:
     return make_substrate_call_with_retry(
         substrate_instance,
         request.module_name,

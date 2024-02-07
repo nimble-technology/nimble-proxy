@@ -1,15 +1,22 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-from get_constant import GetConstantRequest, get_constant_interface
-from query import QueryRequest, get_balance, query_inerface
-from query_map import QueryMapRequest, get_balances, query_map_interface
-from set_weights import SetWeightsRequest, set_weights
-from rpc_request import RpcRequestRequest, rpc_request_interface, state_call
-from get_metadata_call_function import (
+from routers.get_constant import GetConstantRequest, get_constant_interface
+from routers.query import QueryRequest, get_balance, query_inerface
+from routers.query_map import (
+    QueryMapRequest,
+    get_balances,
+    query_map_interface
+)
+from routers.rpc_request import (
+    RpcRequestRequest,
+    rpc_request_interface,
+    state_call
+)
+from routers.get_metadata_call_function import (
     GetMetadataCallRequest,
     get_metadata_call_function
 )
-from get_block_number import get_block_number
+from routers.get_block_number import get_block_number
 app = FastAPI()
 
 
@@ -37,11 +44,6 @@ async def create_item(item: Item):
 async def post_dendrite(synapse: dict):
     print("dendrite synapse", synapse)
     return {"synapse": synapse}
-
-
-@app.post("/set_weights")
-async def call_set_weights(request: SetWeightsRequest):
-    return await set_weights(request)
 
 
 @app.post("/get_balance")

@@ -1,7 +1,7 @@
+from typing import Optional, Tuple
 from pydantic import BaseModel
 from substrateinterface import SubstrateInterface
 from retry import retry
-from typing import Optional, Tuple
 
 substrate_instance = SubstrateInterface(
     url="wss://testnet.nimble.technology"
