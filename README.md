@@ -1,9 +1,9 @@
 ```markdown
-# Nimble Cosmos API
+# Nimble Proxy
 
 ## Introduction
 
-This project is a simple RESTful API built using [FastAPI](https://fastapi.tiangolo.com/).
+The purpose of this repository is to implement the invocation of substrate in the original nimble repository and act as a proxy function
 
 ## Running the Application
 
