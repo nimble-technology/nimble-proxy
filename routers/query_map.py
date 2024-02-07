@@ -1,7 +1,7 @@
+from typing import List, Union, Optional
 from pydantic import BaseModel
 from substrateinterface.base import QueryMapResult, SubstrateInterface
 from retry import retry
-from typing import List, Union, Optional
 from utils.balance import Balance
 
 substrate_instance = SubstrateInterface(
