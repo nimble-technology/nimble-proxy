@@ -1,4 +1,3 @@
-```markdown
 # Nimble Proxy
 
 ## Introduction
