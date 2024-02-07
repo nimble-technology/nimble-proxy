@@ -4,6 +4,7 @@ from get_constant import GetConstantRequest, get_constant_interface
 from query import QueryRequest, get_balance, query_inerface
 from query_map import QueryMapRequest, get_balances, query_map_interface
 from set_weights import SetWeightsRequest, set_weights
+from rpc_request import RpcRequestRequest, rpc_request_interface, state_call
 app = FastAPI()
 
 
@@ -61,3 +62,13 @@ async def call_query_map_api(request: QueryMapRequest):
 @app.post("/get_constant")
 async def call_get_constant_api(request: GetConstantRequest):
     return await get_constant_interface(request)
+
+
+@app.post("/rpc_request_interface")
+async def call_rpc_request_api(request: RpcRequestRequest):
+    return await rpc_request_interface(request)
+
+
+@app.post("/state_call")
+async def call_state_call_api(request: RpcRequestRequest):
+    return await state_call(request)
