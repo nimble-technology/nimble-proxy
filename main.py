@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
+from get_constant import GetConstantRequest, get_constant_interface
 from query import QueryRequest, get_balance, query_inerface
 from query_map import QueryMapRequest, get_balances, query_map_interface
 from set_weights import SetWeightsRequest, set_weights
@@ -55,3 +56,8 @@ async def call_get_balances(request: QueryMapRequest):
 @app.post("/query_map")
 async def call_query_map_api(request: QueryMapRequest):
     return await query_map_interface(request)
+
+
+@app.post("/get_constant")
+async def call_get_constant_api(request: GetConstantRequest):
+    return await get_constant_interface(request)
