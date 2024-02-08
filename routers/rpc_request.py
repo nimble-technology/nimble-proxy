@@ -27,6 +27,7 @@ def make_substrate_call_with_retry(
 
 
 class RpcRequestRequest(BaseModel):
+    substrate_instance: str
     method: str
     encoded_key: Optional[str] = None
     uid: Optional[int] = None

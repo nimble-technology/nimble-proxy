@@ -17,6 +17,13 @@ from routers.get_metadata_call_function import (
     get_metadata_call_function
 )
 from routers.get_block_number import get_block_number
+from routers.compose_call import (
+    ComposeCallRequest,
+    compose_call_interface
+)
+from routers.get_block_hash import get_block_hash
+
+
 app = FastAPI()
 
 
@@ -46,46 +53,56 @@ async def post_dendrite(synapse: dict):
     return {"synapse": synapse}
 
 
-@app.post("/get_balance")
+@app.post("/compose_call")
+async def call_compose_call_api(request: ComposeCallRequest):
+    return await compose_call_interface(request)
+
+
+@app.get("/get_balance")
 async def call_get_balance(request: QueryRequest):
     return await get_balance(request)
 
 
-@app.post("/query")
+@app.get("/query")
 async def call_query_api(request: QueryRequest):
     return await query_inerface(request)
 
 
-@app.post("/get_balances")
+@app.get("/get_balances")
 async def call_get_balances(request: QueryMapRequest):
     return await get_balances(request)
 
 
-@app.post("/query_map")
+@app.get("/query_map")
 async def call_query_map_api(request: QueryMapRequest):
     return await query_map_interface(request)
 
 
-@app.post("/get_constant")
+@app.get("/get_constant")
 async def call_get_constant_api(request: GetConstantRequest):
     return await get_constant_interface(request)
 
 
-@app.post("/rpc_request_interface")
+@app.get("/rpc_request")
 async def call_rpc_request_api(request: RpcRequestRequest):
     return await rpc_request_interface(request)
 
 
-@app.post("/state_call")
+@app.get("/state_call")
 async def call_state_call_api(request: RpcRequestRequest):
     return await state_call(request)
 
 
-@app.post("/get_metadata")
+@app.get("/get_metadata")
 async def call_get_metadata_api(request: GetMetadataCallRequest):
     return await get_metadata_call_function(request)
 
 
-@app.post("/get_block_number")
+@app.get("/get_block_number")
 async def call_get_block_number_api():
     return await get_block_number()
+
+
+@app.get("/get_block_hash/{block_id}")
+async def call_get_block_hash_api(block_id: int):
+    return await get_block_hash(block_id)
