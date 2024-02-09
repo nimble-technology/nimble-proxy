@@ -1,10 +1,9 @@
 from pydantic import BaseModel
 from substrateinterface import SubstrateInterface
 from retry import retry
+from ..config import SUBSTRATE_URL
 
-substrate_instance = SubstrateInterface(
-    url="wss://testnet.nimble.technology"
-)
+substrate_instance = SubstrateInterface(url=SUBSTRATE_URL)
 
 
 @retry(delay=2, tries=3, backoff=2, max_delay=4)
