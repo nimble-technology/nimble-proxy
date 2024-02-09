@@ -44,14 +44,14 @@ def make_substrate_call_with_retry(
 
 
 class ComposeCallRequest(BaseModel):
-    substrate_instance: SubstrateInterface
+    substrate_instance: str
     module: str
     function_name: str
-    call_params: str
-    version_key: int
-    wait_for_inclusion: bool = False,
-    wait_for_finalization: bool = True,
+    call_params: dict
+    wait_for_inclusion: bool = False
+    wait_for_finalization: bool = True
     keypair: str
+    version_key: int = 0
 
 
 async def compose_call_interface(

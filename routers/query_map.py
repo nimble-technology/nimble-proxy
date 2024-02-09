@@ -1,4 +1,4 @@
-from typing import List, Union, Optional
+from typing import List, Dict, Union, Optional
 from pydantic import BaseModel
 from substrateinterface.base import QueryMapResult, SubstrateInterface
 from retry import retry
@@ -37,7 +37,7 @@ class QueryMapRequest(BaseModel):
     block: Optional[int] = None
 
 
-async def get_balances(request: QueryMapRequest) -> dict:
+async def get_balances(request: QueryMapRequest) -> Dict[str, Balance]:
     result = make_substrate_call_with_retry(
         substrate_instance,
         request.module,
