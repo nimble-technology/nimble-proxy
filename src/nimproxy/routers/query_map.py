@@ -2,8 +2,8 @@ from typing import List, Dict, Union, Optional
 from pydantic import BaseModel
 from substrateinterface.base import QueryMapResult, SubstrateInterface
 from retry import retry
-from ..utils.balance import Balance
-from ..config import SUBSTRATE_URL
+from nimproxy.utils.balance import Balance
+from nimproxy.constants import SUBSTRATE_URL
 
 substrate_instance = SubstrateInterface(url=SUBSTRATE_URL)
 
