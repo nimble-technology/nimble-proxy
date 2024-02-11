@@ -70,11 +70,10 @@ setup(
     packages=['nimproxy'],
     package_dir={'':'src'},
     # metadata like version etc.
-    description="Nimble miners",
+    description="Nimble proxy",
     author="nimble.technology",
     include_package_data=True,
     license="MIT",
     python_requires=">=3.9",
     install_requires=requirements,
 )
-
