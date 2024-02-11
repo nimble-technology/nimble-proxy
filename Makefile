@@ -7,6 +7,7 @@ clean:
 	rm -rf ./nenv && \
 	rm -rf dist/ && \
 	rm -rf build/ && \
+	rm -rf src/nimproxy.egg-info/ && \
 	rm -rf .pytest_cache/ && \
 	rm -rf .hypothesis
 
