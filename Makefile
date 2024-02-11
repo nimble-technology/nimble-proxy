@@ -11,7 +11,6 @@ clean:
 	rm -rf .hypothesis
 
 format:
-	black --line-length 80 setup.py && \
 	black  --line-length 80 ./src
 
 lint:

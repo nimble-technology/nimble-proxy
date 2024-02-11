@@ -9,9 +9,7 @@ substrate_instance = SubstrateInterface(url=SUBSTRATE_URL)
 
 @retry(delay=2, tries=3, backoff=2, max_delay=4)
 def make_substrate_call_with_retry(
-    method: str,
-    params: List,
-    block: Optional[int] = None
+    method: str, params: List, block: Optional[int] = None
 ) -> dict:
     if block is not None:
         block_hash = substrate_instance.get_block_hash(block)

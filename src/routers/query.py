@@ -9,11 +9,7 @@ substrate_instance = SubstrateInterface(url=SUBSTRATE_URL)
 
 @retry(delay=2, tries=3, backoff=2, max_delay=4)
 def make_substrate_call_with_retry(
-    substrate,
-    module,
-    storage_function,
-    params,
-    block
+    substrate, module, storage_function, params, block
 ):
     if block is not None:
         block_hash = substrate.get_block_hash(block)
@@ -41,7 +37,7 @@ async def get_balance(request: QueryRequest) -> dict:
         request.module,
         request.storage_function,
         request.params,
-        request.block
+        request.block,
     )
     if result:
         balance = result.value["data"]["free"]
@@ -56,5 +52,5 @@ async def query_inerface(request: QueryRequest) -> Optional[object]:
         request.module,
         request.storage_function,
         request.params,
-        request.block
+        request.block,
     )
