@@ -5,19 +5,22 @@ from nimproxy.routers.query import QueryRequest, get_balance, query_inerface
 from nimproxy.routers.query_map import (
     QueryMapRequest,
     get_balances,
-    query_map_interface,
+    query_map_interface
 )
 from nimproxy.routers.rpc_request import (
     RpcRequestRequest,
     rpc_request_interface,
-    state_call,
+    state_call
 )
 from nimproxy.routers.get_metadata_call_function import (
     GetMetadataCallRequest,
-    get_metadata_call_function,
+    get_metadata_call_function
 )
 from nimproxy.routers.get_block_number import get_block_number
-from nimproxy.routers.compose_call import ComposeCallRequest, compose_call_interface
+from routers.compose_call import (
+    ComposeCallRequest,
+    compose_call_interface
+)
 from nimproxy.routers.get_block_hash import get_block_hash
 
 
@@ -26,7 +29,7 @@ app = FastAPI()
 
 class Item(BaseModel):
     name: str
-    description: str | None = None
+    description: str
 
 
 @app.get("/print")
