@@ -9,10 +9,7 @@ substrate_instance = SubstrateInterface(url=SUBSTRATE_URL)
 
 @retry(delay=2, tries=3, backoff=2, max_delay=4)
 def make_substrate_call_with_retry(
-    substrate,
-    module_name,
-    constant_name,
-    block
+    substrate, module_name, constant_name, block
 ):
     if block is not None:
         block_hash = substrate.get_block_hash(block)
@@ -33,11 +30,11 @@ class GetConstantRequest(BaseModel):
 
 
 async def get_constant_interface(
-    request: GetConstantRequest
+    request: GetConstantRequest,
 ) -> Optional[object]:
     return make_substrate_call_with_retry(
         substrate_instance,
         request.module_name,
         request.constant_name,
-        request.block
+        request.block,
     )

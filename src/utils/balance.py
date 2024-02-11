@@ -31,7 +31,7 @@ class Balance:
         nim: A float property that gives the balance in nim units.
     """
 
-    unit: str = 'nim'  # This is the nim unit
+    unit: str = "nim"  # This is the nim unit
     vim_unit: str = chr(0x03C1)  # This is the vim unit
     vim: int
     nim: float

@@ -15,7 +15,7 @@ def make_substrate_call_with_retry(
     call_params,
     keypair,
     wait_for_inclusion,
-    wait_for_finalization
+    wait_for_finalization,
 ):
     call = substrate.compose_call(
         call_module=module,
@@ -54,7 +54,7 @@ class ComposeCallRequest(BaseModel):
 
 
 async def compose_call_interface(
-    request_data: ComposeCallRequest
+    request_data: ComposeCallRequest,
 ) -> Tuple[bool, Optional[str]]:
     return make_substrate_call_with_retry(
         substrate_instance,
@@ -63,5 +63,5 @@ async def compose_call_interface(
         request_data.call_params,
         request_data.keypair,
         request_data.wait_for_inclusion,
-        request_data.wait_for_finalization
+        request_data.wait_for_finalization,
     )

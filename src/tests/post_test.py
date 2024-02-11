@@ -7,11 +7,7 @@ substrate_instance = SubstrateInterface(url=SUBSTRATE_URL)
 
 @retry(delay=2, tries=3, backoff=2, max_delay=4)
 def make_substrate_call_with_retry(
-    substrate,
-    module,
-    storage_function,
-    address,
-    block_hash
+    substrate, module, storage_function, address, block_hash
 ):
     if block_hash is None:
         block_hash = substrate.get_block_hash(None)
@@ -31,14 +27,10 @@ async def get_balance_api(request: dict) -> dict:
 
     try:
         result = make_substrate_call_with_retry(
-            substrate_instance,
-            module,
-            storage_function,
-            address,
-            block_hash
+            substrate_instance, module, storage_function, address, block_hash
         )
     except Exception as e:
-        print(f'Error occurred: {e}')
+        print(f"Error occurred: {e}")
         return {"balance": "-1", "error": str(e)}
 
     if result:
