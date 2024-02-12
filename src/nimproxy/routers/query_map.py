@@ -2,20 +2,15 @@ from typing import List, Dict, Union, Optional
 from pydantic import BaseModel
 from substrateinterface.base import QueryMapResult, SubstrateInterface
 from retry import retry
-from utils.balance import Balance
+from nimproxy.utils.balance import Balance
+from nimproxy.constants import SUBSTRATE_URL
 
-substrate_instance = SubstrateInterface(
-    url="wss://testnet.nimble.technology"
-)
+substrate_instance = SubstrateInterface(url=SUBSTRATE_URL)
 
 
 @retry(delay=2, tries=3, backoff=2, max_delay=4)
 def make_substrate_call_with_retry(
-    substrate,
-    module,
-    storage_function,
-    params,
-    block
+    substrate, module, storage_function, params, block
 ):
     if block is not None:
         block_hash = substrate.get_block_hash(block)
@@ -43,7 +38,7 @@ async def get_balances(request: QueryMapRequest) -> Dict[str, Balance]:
         request.module,
         request.storage_function,
         request.params,
-        request.block
+        request.block,
     )
     return_dict = {}
     for r in result:
@@ -53,12 +48,12 @@ async def get_balances(request: QueryMapRequest) -> Dict[str, Balance]:
 
 
 async def query_map_interface(
-        request: QueryMapRequest
+    request: QueryMapRequest,
 ) -> Union[Optional[object], QueryMapResult]:
     return make_substrate_call_with_retry(
         substrate_instance,
         request.module,
         request.storage_function,
         request.params,
-        request.block
+        request.block,
     )

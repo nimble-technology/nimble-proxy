@@ -1,9 +1,8 @@
-from typing import List, Dict, Union, Optional
+from typing import List, Optional
 from pydantic import BaseModel
-from substrateinterface.base import QueryMapResult, SubstrateInterface
+from substrateinterface import SubstrateInterface
 from retry import retry
-from ..utils.balance import Balance
-from ..config import SUBSTRATE_URL
+from nimproxy.constants import SUBSTRATE_URL
 
 substrate_instance = SubstrateInterface(url=SUBSTRATE_URL)
 
@@ -16,7 +15,7 @@ def make_substrate_call_with_retry(
         block_hash = substrate.get_block_hash(block)
     else:
         block_hash = None
-    return substrate.query_map(
+    return substrate.query(
         module=module,
         storage_function=storage_function,
         params=params,
@@ -24,7 +23,7 @@ def make_substrate_call_with_retry(
     )
 
 
-class QueryMapRequest(BaseModel):
+class QueryRequest(BaseModel):
     substrate_instance: str
     module: str
     storage_function: str
@@ -32,7 +31,7 @@ class QueryMapRequest(BaseModel):
     block: Optional[int] = None
 
 
-async def get_balances(request: QueryMapRequest) -> Dict[str, Balance]:
+async def get_balance(request: QueryRequest) -> dict:
     result = make_substrate_call_with_retry(
         substrate_instance,
         request.module,
@@ -40,16 +39,14 @@ async def get_balances(request: QueryMapRequest) -> Dict[str, Balance]:
         request.params,
         request.block,
     )
-    return_dict = {}
-    for r in result:
-        bal = Balance(int(r[1]["data"]["free"].value))
-        return_dict[r[0].value] = bal
-    return return_dict
+    if result:
+        balance = result.value["data"]["free"]
+        return {"balance": balance}
+
+    return {"balance": "-1"}
 
 
-async def query_map_interface(
-    request: QueryMapRequest,
-) -> Union[Optional[object], QueryMapResult]:
+async def query_inerface(request: QueryRequest) -> Optional[object]:
     return make_substrate_call_with_retry(
         substrate_instance,
         request.module,

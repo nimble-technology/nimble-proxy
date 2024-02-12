@@ -2,7 +2,7 @@ from typing import Optional
 from pydantic import BaseModel
 from substrateinterface import SubstrateInterface
 from retry import retry
-from ..config import SUBSTRATE_URL
+from nimproxy.constants import SUBSTRATE_URL
 
 substrate_instance = SubstrateInterface(url=SUBSTRATE_URL)
 
