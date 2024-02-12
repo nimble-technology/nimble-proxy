@@ -1,10 +1,10 @@
 SHELL:=/bin/bash
 
 env:
-	python3 -m venv nenv && source ./nenv/bin/activate
+	python3 -m venv nbenv
 
 clean:
-	rm -rf ./nenv && \
+	rm -rf ./nbenv && \
 	rm -rf dist/ && \
 	rm -rf build/ && \
 	rm -rf src/nimproxy.egg-info/ && \
@@ -12,6 +12,7 @@ clean:
 	rm -rf .hypothesis
 
 format:
+	black --line-length 80 setup.py && \
 	black  --line-length 80 ./src
 
 lint:
